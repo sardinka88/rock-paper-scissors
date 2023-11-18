@@ -1,9 +1,9 @@
  // declare an array containing word choices for RPS game
-  let words = ['rock', 'paper', 'scissors'];
+  const actionWords = ['rock', 'paper', 'scissors'];
  
  // initialize a function that returns a random word from an array - rock, paper or scissors 
  function getComputerChoice() {
-    return words[Math.floor(Math.random() * words.length)]
+    return actionWords[Math.floor(Math.random() * actionWords.length)]
  }
 
 
