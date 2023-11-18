@@ -59,22 +59,22 @@ function checkWinner (score1, score2) {
     }
 }
 
-function game(rounds) {
+function game(numberOfRounds) {
     let playerScore = 0;
     let computerScore = 0;
     let result;
     let playerSelection;
     let computerSelection;
-    for (let i = 1; i <= rounds; i++ ) {
+    for (let i = 1; i <= numberOfRounds; i++ ) {
         playerSelection = prompt('Choose rock, paper or scissors: ', '');
         computerSelection = getComputerChoice();
         console.log(`You chose ${playerSelection.toLowerCase()}, player chose ${computerSelection}`);
         result = playRound(playerSelection, computerSelection);
         console.log(result);
         if (result === true) {
-            playerScore += 1;
+            playerScore++;
         } else if (result === false) {
-            computerScore += 1;
+            computerScore++;
         } 
 
         console.log(`Player: ${playerScore} - Computer: ${computerScore}`);
