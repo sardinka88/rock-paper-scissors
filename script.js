@@ -6,6 +6,10 @@
     return words[Math.floor(Math.random() * words.length)]
  }
 
+
+ // function that plays one round of RPS game
+ // returns true if player wins, false if computer wins
+ // in case of a tie, it returns a string "tie"
  function playRound(playerSelection, computerSelection) {
     if (playerSelection.toLowerCase() === 'rock') {
         switch (computerSelection) {
@@ -49,6 +53,8 @@
  }
 
 
+ // check for winner, assuming score1 is player's score and score2 computer's
+ // returns appropriate message
 function checkWinner (score1, score2) {
     if (score1 > score2) {
         return 'Player wins!';
@@ -59,6 +65,11 @@ function checkWinner (score1, score2) {
     }
 }
 
+
+// asks for a number of rounds and plays that many rounds of RPS game
+// logs score for each round, and final score
+// for testing purposes, will log result of reach round
+// should improve with logic that handles non-compliant inputs of number of rounds
 function game(numberOfRounds) {
     let playerScore = 0;
     let computerScore = 0;
