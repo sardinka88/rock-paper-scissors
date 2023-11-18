@@ -67,6 +67,7 @@ function checkWinner (score1, score2) {
 
 
 // asks for a number of rounds and plays that many rounds of RPS game
+// if user submits an invalid word, the round is repeated
 // logs score for each round, and final score
 // for testing purposes, will log result of reach round
 // should improve with logic that handles non-compliant inputs of number of rounds
@@ -86,7 +87,9 @@ function game(numberOfRounds) {
             playerScore++;
         } else if (result === false) {
             computerScore++;
-        } 
+        } else if (result === 'Please provide a valid selection!') {
+            i--;
+        }
 
         console.log(`Player: ${playerScore} - Computer: ${computerScore}`);
     }
