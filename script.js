@@ -10,37 +10,37 @@
     if (playerSelection.toLowerCase() === 'rock') {
         switch (computerSelection) {
             case 'rock' :
-                return 'It\'s a tie!';
+                return 'tie';
                 break;
             case 'paper' :
-                return 'You lose! Paper beats rock!';
+                return false;
                 break;
             case 'scissors' :
-                return 'You win! Rock beats scissors!';
+                return true;
                 break;
         }
     } else if (playerSelection.toLowerCase() === 'paper') {
         switch (computerSelection) {
             case 'rock' :
-                return 'You win! Paper beats rock!';
+                return true;
                 break;
             case 'paper' :
-                return 'It\'s a tie!';
+                return 'tie';
                 break;
             case 'scissors' :
-                return 'You lose! Scissors beat paper!';
+                return false;
                 break;
         }
     } else if (playerSelection.toLowerCase() === 'scissors') {
         switch (computerSelection) {
             case 'rock' :
-                return 'You lose! Rock beats scissors!';
+                return false;
                 break;
             case 'paper' :
-                return 'You win! Scissors beat paper!';
+                return true;
                 break;
             case 'scissors' :
-                return 'It\'s a tie!';
+                return 'tie';
                 break;
         }
     } else {
@@ -49,7 +49,41 @@
  }
 
 
-const playerSelection = 'ROck';
-const computerSelection = getComputerChoice();
-console.log(`You chose ${playerSelection.toLowerCase()}, player chose ${computerSelection}`);
-console.log(playRound(playerSelection, computerSelection));
+function checkWinner (score1, score2) {
+    if (score1 > score2) {
+        return 'Player wins!';
+    } else if (score2 > score1) {
+        return 'Computer wins!';
+    } else {
+        return "It's a tie!";
+    }
+}
+
+function game(rounds) {
+    let playerScore = 0;
+    let computerScore = 0;
+    let result;
+    let playerSelection;
+    let computerSelection;
+    for (let i = 1; i <= rounds; i++ ) {
+        playerSelection = prompt('Choose rock, paper or scissors: ', '');
+        computerSelection = getComputerChoice();
+        console.log(`You chose ${playerSelection.toLowerCase()}, player chose ${computerSelection}`);
+        result = playRound(playerSelection, computerSelection);
+        console.log(result);
+        if (result === true) {
+            playerScore += 1;
+        } else if (result === false) {
+            computerScore += 1;
+        } 
+
+        console.log(`Player: ${playerScore} - Computer: ${computerScore}`);
+    }
+    console.log(checkWinner(playerScore, computerScore));
+    return `Final score is: Player ${playerScore} - Computer ${computerScore}`;
+    
+}
+
+
+let rounds = +prompt('How many rounds do you wish to play?', '');
+console.log(game(rounds));
