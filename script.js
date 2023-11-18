@@ -79,7 +79,7 @@ function game(numberOfRounds) {
     for (let i = 1; i <= numberOfRounds; i++ ) {
         playerSelection = prompt('Choose rock, paper or scissors: ', '');
         computerSelection = getComputerChoice();
-        console.log(`You chose ${playerSelection.toLowerCase()}, player chose ${computerSelection}`);
+        console.log(`You chose ${playerSelection.toLowerCase()}, the computer chose ${computerSelection}`);
         result = playRound(playerSelection, computerSelection);
         console.log(result);
         if (result === true) {
