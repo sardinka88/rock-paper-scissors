@@ -20,6 +20,14 @@ const getSelection = (event) => {
 let actionButtons = document.querySelectorAll(".actionButton");
 actionButtons.forEach((button) => {
   button.addEventListener("click", getSelection);
+  button.addEventListener("click", () => {
+    actionButtons.forEach((otherButton) => {
+      if (otherButton !== button) {
+        otherButton.classList.remove("clicked");
+      }
+    });
+    button.classList.toggle("clicked");
+  });
 });
 
 // function that plays one round of RPS game

@@ -35,6 +35,18 @@ h1 {
   transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
 }
 
+.actionButton {
+  display: inline-block;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  padding: 15px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
 /* Style for rock button */
 .rock {
   background-color: #9c9c9c;
@@ -58,4 +70,23 @@ h1 {
   background-color: #ddd;
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effect */
+.actionButton:hover {
+  background-color: #ddd;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Active state */
+.actionButton:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+/* Toggled state (added class when clicked) */
+.actionButton.clicked {
+  background-color: #ccc; /* Change the color for the clicked state */
+  border: 4px solid red;
 }
