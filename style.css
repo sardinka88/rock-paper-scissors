@@ -1,0 +1,57 @@
+#main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.rounds {
+  text-align: center;
+}
+
+input {
+  margin: 16px;
+}
+
+.results,
+.round.number {
+  font-size: 48px;
+  text-align: center;
+}
+
+/* Basic styling for circular buttons */
+.button {
+  display: inline-block;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  padding: 15px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+/* Style for rock button */
+.rock {
+  background-color: #9c9c9c;
+  color: #fff;
+}
+
+/* Style for paper button */
+.paper {
+  background-color: #5d9cec;
+  color: #fff;
+}
+
+/* Style for scissors button */
+.scissors {
+  background-color: #ff6b6b;
+  color: #fff;
+}
+
+/* Hover effect */
+.button:hover {
+  background-color: #ddd;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
