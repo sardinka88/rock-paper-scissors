@@ -8,9 +8,24 @@ function getComputerChoice() {
 
 const playButton = document.querySelector(".button.rounds");
 let playerSelection = "";
+let roundOutcome = "";
+let playerScore = 0;
+let computerScore = 0;
+let winner = "";
+let roundCounter = 0;
 
 playButton.addEventListener("click", () => {
-  playRound(playerSelection, getComputerChoice());
+  if (checkWinner(playerScore, computerScore)) {
+    document.querySelector(".round-outcome").textContent = "";
+    document.querySelector(
+      ".round-outcome"
+    ).textContent = `${winner} wins the game after ${roundCounter} rounds!!!`;
+  } else {
+    playRound(playerSelection, getComputerChoice());
+    roundCounter++;
+    document.querySelector(".round-outcome").textContent = "";
+    document.querySelector(".round-outcome").textContent = roundOutcome;
+  }
 });
 
 const getSelection = (event) => {
@@ -40,36 +55,50 @@ function playRound(playerSelection, computerSelection) {
     switch (computerSelection) {
       case "rock":
         console.log("tie");
+        roundOutcome = "It's a tie!";
         break;
       case "paper":
         console.log("You win");
+        roundOutcome = "You win!";
+        playerScore++;
         break;
       case "scissors":
         console.log("You lose");
+        roundOutcome = "You lose";
+        computerScore++;
         break;
     }
   } else if (playerSelection.toLowerCase() === "paper") {
     switch (computerSelection) {
       case "rock":
-        console.log("You win");
+        roundOutcome = "You win!";
+        playerScore++;
         break;
       case "paper":
         console.log("tie");
+        roundOutcome = "It's a tie!";
         break;
       case "scissors":
         console.log("You lose");
+        roundOutcome = "You lose";
+        computerScore++;
         break;
     }
   } else if (playerSelection.toLowerCase() === "scissors") {
     switch (computerSelection) {
       case "rock":
         console.log("You lose");
+        roundOutcome = "You lose";
+        computerScore++;
         break;
       case "paper":
         console.log("You win");
+        roundOutcome = "You win!";
+        playerScore++;
         break;
       case "scissors":
         console.log("tie");
+        roundOutcome = "It's a tie!";
         break;
     }
   } else {
@@ -79,14 +108,15 @@ function playRound(playerSelection, computerSelection) {
 
 // check for winner, assuming score1 is player's score and score2 computer's
 // returns appropriate message
-function checkWinner(score1, score2) {
-  if (score1 > score2) {
-    return "Player wins!";
-  } else if (score2 > score1) {
-    return "Computer wins!";
-  } else {
-    return "It's a tie!";
+function checkWinner(playerScore, computerScore) {
+  if (playerScore === 5) {
+    winner = "player";
+    return true;
+  } else if (computerScore === 5) {
+    winner = "computer";
+    return true;
   }
+  return false;
 }
 
 // asks for a number of rounds and plays that many rounds of RPS game
