@@ -6,7 +6,13 @@ function getComputerChoice() {
   return actionWords[Math.floor(Math.random() * actionWords.length)];
 }
 
-const playButton = document.querySelector(".button.rounds");
+const playButton = document.querySelector(".button.play");
+const resetButton = document.querySelector(".button.reset");
+const playerResultSpan = document.querySelector("#player");
+const computerResultSpan = document.querySelector("#computer");
+const mainContainer = document.querySelector(".main.container");
+let actionButtons = document.querySelectorAll(".actionButton");
+
 let playerSelection = "";
 let roundOutcome = "";
 let playerScore = 0;
@@ -20,19 +26,48 @@ playButton.addEventListener("click", () => {
     document.querySelector(
       ".round-outcome"
     ).textContent = `${winner} wins the game after ${roundCounter} rounds!!!`;
+    playButton.style.display = "none";
+    resetButton.style.display = "inline-block";
   } else {
     playRound(playerSelection, getComputerChoice());
     roundCounter++;
     document.querySelector(".round-outcome").textContent = "";
     document.querySelector(".round-outcome").textContent = roundOutcome;
+    playerResultSpan.textContent = playerScore;
+    computerResultSpan.textContent = computerScore;
+
+    if (checkWinner(playerScore, computerScore)) {
+      document.querySelector(".round-outcome").textContent = "";
+      document.querySelector(
+        ".round-outcome"
+      ).textContent = `${winner} wins the game after ${roundCounter} rounds!!!`;
+      playButton.style.display = "none";
+      resetButton.style.display = "inline-block";
+    }
   }
+});
+
+resetButton.addEventListener("click", () => {
+  roundCounter = 0;
+  roundOutcome = 0;
+  playerScore = 0;
+  computerScore = 0;
+  winner = "";
+  playerResultSpan.textContent = "";
+  computerResultSpan.textContent = "";
+  playerSelection = "";
+  document.querySelector(".round-outcome").textContent = "";
+  resetButton.style.display = "none";
+  playButton.style.display = "inline-block";
+  actionButtons.forEach((button) => {
+    button.classList.remove("clicked");
+  });
 });
 
 const getSelection = (event) => {
   playerSelection = event.target.textContent;
 };
 
-let actionButtons = document.querySelectorAll(".actionButton");
 actionButtons.forEach((button) => {
   button.addEventListener("click", getSelection);
   button.addEventListener("click", () => {
@@ -103,6 +138,7 @@ function playRound(playerSelection, computerSelection) {
     }
   } else {
     console.log("Please provide a valid selection!");
+    roundOutcome = "Please select your weapon";
   }
 }
 
@@ -115,8 +151,7 @@ function checkWinner(playerScore, computerScore) {
   } else if (computerScore === 5) {
     winner = "computer";
     return true;
-  }
-  return false;
+  } else return false;
 }
 
 // asks for a number of rounds and plays that many rounds of RPS game
