@@ -6,13 +6,16 @@ function getComputerChoice() {
   return actionWords[Math.floor(Math.random() * actionWords.length)];
 }
 
+// initialize DOM elements
 const playButton = document.querySelector(".button.play");
 const resetButton = document.querySelector(".button.reset");
 const playerResultSpan = document.querySelector("#player");
 const computerResultSpan = document.querySelector("#computer");
 const mainContainer = document.querySelector(".main.container");
-let actionButtons = document.querySelectorAll(".actionButton");
+const actionButtons = document.querySelectorAll(".actionButton");
+const roundOutcomeElement = document.querySelector(".round-outcome");
 
+// initialize game variables
 let playerSelection = "";
 let roundOutcome = "";
 let playerScore = 0;
@@ -20,54 +23,71 @@ let computerScore = 0;
 let winner = "";
 let roundCounter = 0;
 
-playButton.addEventListener("click", () => {
-  if (checkWinner(playerScore, computerScore)) {
-    document.querySelector(".round-outcome").textContent = "";
-    document.querySelector(
-      ".round-outcome"
-    ).textContent = `${winner} wins the game after ${roundCounter} rounds!!!`;
-    playButton.style.display = "none";
-    resetButton.style.display = "inline-block";
-  } else {
-    playRound(playerSelection, getComputerChoice());
-    roundCounter++;
-    document.querySelector(".round-outcome").textContent = "";
-    document.querySelector(".round-outcome").textContent = roundOutcome;
-    playerResultSpan.textContent = playerScore;
-    computerResultSpan.textContent = computerScore;
+/*
+ * Generates and displays the end-of-game message in the UI.
+ * Updates the round outcome element with the winner and the total number of rounds played.
+ * Adjusts the display of the play and reset buttons accordingly.
+ */
+const generateRoundEnd = () => {
+  roundOutcomeElement.textContent = "";
+  roundOutcomeElement.textContent = `${winner} wins the game after ${roundCounter} rounds!!!`;
+  playButton.style.display = "none";
+  resetButton.style.display = "inline-block";
+};
 
-    if (checkWinner(playerScore, computerScore)) {
-      document.querySelector(".round-outcome").textContent = "";
-      document.querySelector(
-        ".round-outcome"
-      ).textContent = `${winner} wins the game after ${roundCounter} rounds!!!`;
-      playButton.style.display = "none";
-      resetButton.style.display = "inline-block";
-    }
+/*
+ * Event listener for the click event on the play button.
+ * Plays a round of the game, increments the round counter, and updates the UI with the results.
+ * Checks for a winner after playing the round and generates the end-of-game message if applicable.
+ */
+playButton.addEventListener("click", () => {
+  playRound(playerSelection, getComputerChoice());
+  roundCounter++;
+  roundOutcomeElement.textContent = "";
+  roundOutcomeElement.textContent = roundOutcome;
+  playerResultSpan.textContent = playerScore;
+  computerResultSpan.textContent = computerScore;
+
+  if (checkWinner(playerScore, computerScore)) {
+    generateRoundEnd();
   }
 });
 
+/*
+ * Event listener for the click event on the reset button.
+ * Resets game-related variables, clears UI elements, and adjusts button visibility.
+ * Sets the game state for a new round.
+ */
 resetButton.addEventListener("click", () => {
   roundCounter = 0;
-  roundOutcome = 0;
+  roundOutcome = "";
   playerScore = 0;
   computerScore = 0;
   winner = "";
   playerResultSpan.textContent = "";
   computerResultSpan.textContent = "";
   playerSelection = "";
-  document.querySelector(".round-outcome").textContent = "";
+  roundOutcomeElement.textContent = "";
   resetButton.style.display = "none";
   playButton.style.display = "inline-block";
-  actionButtons.forEach((button) => {
-    button.classList.remove("clicked");
-  });
+  actionButtons.forEach((button) => button.classList.remove("clicked"));
 });
 
+/**
+ * Event handler for the click event on action buttons.
+ * Retrieves the player's selection based on the clicked button's text content.
+ * Updates the playerSelection variable for the current round.
+ */
 const getSelection = (event) => {
   playerSelection = event.target.textContent;
 };
 
+/*
+ * Adds event listeners to each action button.
+ * The first listener captures the player's selection when the button is clicked.
+ * The second listener ensures only the clicked button is visually marked as 'clicked.'
+ * It removes the 'clicked' class from other buttons and toggles the class on the clicked button.
+ */
 actionButtons.forEach((button) => {
   button.addEventListener("click", getSelection);
   button.addEventListener("click", () => {
@@ -80,9 +100,13 @@ actionButtons.forEach((button) => {
   });
 });
 
-// function that plays one round of RPS game
-// returns true if player wins, false if computer wins
-// in case of a tie, it returns a string "tie"
+/*
+ * Plays a round of the Rock, Paper, Scissors game and updates game variables.
+ * Logs player and computer selections to the console for debugging.
+ * Determines the round outcome based on the choices and updates scores accordingly.
+ * @param {string} playerSelection - The player's choice (rock, paper, or scissors).
+ * @param {string} computerSelection - The computer's randomly generated choice.
+ */
 function playRound(playerSelection, computerSelection) {
   console.log(playerSelection);
   console.log(computerSelection);
@@ -142,8 +166,13 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-// check for winner, assuming score1 is player's score and score2 computer's
-// returns appropriate message
+/*
+ * Checks if either the player or the computer has reached the winning score (5) in the Rock, Paper, Scissors game.
+ * Updates the winner variable accordingly and returns true if a winner is found, otherwise returns false.
+ * @param {number} playerScore - The current score of the player.
+ * @param {number} computerScore - The current score of the computer.
+ * @returns {boolean} - True if there is a winner, false otherwise.
+ */
 function checkWinner(playerScore, computerScore) {
   if (playerScore === 5) {
     winner = "player";
@@ -153,38 +182,3 @@ function checkWinner(playerScore, computerScore) {
     return true;
   } else return false;
 }
-
-// asks for a number of rounds and plays that many rounds of RPS game
-// if user submits an invalid word, the round is repeated
-// logs score for each round, and final score
-// for testing purposes, will log result of reach round
-// should improve with logic that handles non-compliant inputs of number of rounds
-// function game(numberOfRounds) {
-//   let playerScore = 0;
-//   let computerScore = 0;
-//   let currentRound = 0;
-//   let result;
-//   let playerSelection;
-//   let computerSelection;
-//   for (let i = 1; i <= numberOfRounds; i++) {
-//     playerSelection = getSelection;
-//     computerSelection = getComputerChoice();
-//     currentRound = i;
-//     console.log(
-//       `You chose ${playerSelection}, the computer chose ${computerSelection}`
-//     );
-//     result = playRound(playerSelection, computerSelection);
-//     console.log(result);
-//     if (result === true) {
-//       playerScore++;
-//     } else if (result === false) {
-//       computerScore++;
-//     } else if (result === "Please provide a valid selection!") {
-//       i--;
-//     }
-
-//     console.log(`Player: ${playerScore} - Computer: ${computerScore}`);
-//   }
-//   console.log(checkWinner(playerScore, computerScore));
-//   return `Final score is: Player ${playerScore} - Computer ${computerScore}`;
-// }
