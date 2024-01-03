@@ -9,9 +9,11 @@ const computerResultSpan = document.querySelector("#computer");
 const mainContainer = document.querySelector(".main.container");
 const actionButtons = document.querySelectorAll(".actionButton");
 const roundOutcomeElement = document.querySelector(".round-outcome");
+const computerWeaponPara = document.querySelector(".computer-weapon");
 
 // initialize game variables
-let playerSelection = "";
+let playerWeapon = "";
+let computerWeapon = "";
 let roundOutcome = "";
 let playerScore = 0;
 let computerScore = 0;
@@ -39,10 +41,10 @@ const generateRoundEnd = () => {
 /*
  * Event handler for the click event on action buttons.
  * Retrieves the player's selection based on the clicked button's text content.
- * Updates the playerSelection variable for the current round.
+ * Updates the playerWeapon variable for the current round.
  */
 const getSelection = (event) => {
-  playerSelection = event.target.textContent;
+  playerWeapon = event.target.textContent;
 };
 
 // Event listeners:
@@ -52,12 +54,13 @@ const getSelection = (event) => {
  * Checks for a winner after playing the round and generates the end-of-game message if applicable.
  */
 playButton.addEventListener("click", () => {
-  playRound(playerSelection, getComputerChoice());
+  playRound(playerWeapon, getComputerChoice());
   roundCounter++;
   roundOutcomeElement.textContent = "";
   roundOutcomeElement.textContent = roundOutcome;
   playerResultSpan.textContent = playerScore;
   computerResultSpan.textContent = computerScore;
+  computerWeaponPara.textContent = `Computer chose ${computerWeapon}`;
 
   if (checkWinner(playerScore, computerScore)) {
     generateRoundEnd();
@@ -77,7 +80,7 @@ resetButton.addEventListener("click", () => {
   winner = "";
   playerResultSpan.textContent = "";
   computerResultSpan.textContent = "";
-  playerSelection = "";
+  playerWeapon = "";
   roundOutcomeElement.textContent = "";
   resetButton.style.display = "none";
   playButton.style.display = "inline-block";
@@ -111,8 +114,10 @@ actionButtons.forEach((button) => {
  * @param {string} computerSelection - The computer's randomly generated choice.
  */
 function playRound(playerSelection, computerSelection) {
+  computerWeapon = computerSelection;
   console.log(playerSelection);
   console.log(computerSelection);
+
   if (playerSelection.toLowerCase() === "rock") {
     switch (computerSelection) {
       case "rock":
@@ -120,14 +125,14 @@ function playRound(playerSelection, computerSelection) {
         roundOutcome = "It's a tie!";
         break;
       case "paper":
-        console.log("You win");
-        roundOutcome = "You win!";
-        playerScore++;
+        console.log("You lose");
+        roundOutcome = "You lose!";
+        computerScore++;
         break;
       case "scissors":
-        console.log("You lose");
-        roundOutcome = "You lose";
-        computerScore++;
+        console.log("You win");
+        roundOutcome = "You win";
+        playerScore++;
         break;
     }
   } else if (playerSelection.toLowerCase() === "paper") {
