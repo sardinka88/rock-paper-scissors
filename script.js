@@ -1,11 +1,6 @@
 // declare an array containing word choices for RPS game
 const actionWords = ["rock", "paper", "scissors"];
 
-// initialize a function that returns a random word from an array - rock, paper or scissors
-function getComputerChoice() {
-  return actionWords[Math.floor(Math.random() * actionWords.length)];
-}
-
 // initialize DOM elements
 const playButton = document.querySelector(".button.play");
 const resetButton = document.querySelector(".button.reset");
@@ -23,6 +18,12 @@ let computerScore = 0;
 let winner = "";
 let roundCounter = 0;
 
+// Event handler functions:
+
+// initialize a function that returns a random word from an array - rock, paper or scissors
+function getComputerChoice() {
+  return actionWords[Math.floor(Math.random() * actionWords.length)];
+}
 /*
  * Generates and displays the end-of-game message in the UI.
  * Updates the round outcome element with the winner and the total number of rounds played.
@@ -35,6 +36,16 @@ const generateRoundEnd = () => {
   resetButton.style.display = "inline-block";
 };
 
+/*
+ * Event handler for the click event on action buttons.
+ * Retrieves the player's selection based on the clicked button's text content.
+ * Updates the playerSelection variable for the current round.
+ */
+const getSelection = (event) => {
+  playerSelection = event.target.textContent;
+};
+
+// Event listeners:
 /*
  * Event listener for the click event on the play button.
  * Plays a round of the game, increments the round counter, and updates the UI with the results.
@@ -73,15 +84,6 @@ resetButton.addEventListener("click", () => {
   actionButtons.forEach((button) => button.classList.remove("clicked"));
 });
 
-/**
- * Event handler for the click event on action buttons.
- * Retrieves the player's selection based on the clicked button's text content.
- * Updates the playerSelection variable for the current round.
- */
-const getSelection = (event) => {
-  playerSelection = event.target.textContent;
-};
-
 /*
  * Adds event listeners to each action button.
  * The first listener captures the player's selection when the button is clicked.
@@ -100,6 +102,7 @@ actionButtons.forEach((button) => {
   });
 });
 
+// Game logic functions:
 /*
  * Plays a round of the Rock, Paper, Scissors game and updates game variables.
  * Logs player and computer selections to the console for debugging.
